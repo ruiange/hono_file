@@ -1,7 +1,8 @@
 import { sign } from 'hono/jwt'
+import type { Env } from 'hono'
 
-const SECRET = 'your-secret-key' // 生产环境请用环境变量
-
-export async function createJwt(payload: Record<string, any>): Promise<string> {
-  return await sign(payload, SECRET)
+export const createJwt = async (payload: Record<string, any>, env: Env): Promise<string> => {
+  const secret = env.JWT_SECRET || 'your-secret-key'
+  console.log('secret', secret)
+  return await sign(payload, secret)
 }
