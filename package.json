@@ -1,0 +1,28 @@
+{
+  "name": "my-app",
+  "version": "0.0.1",
+  "private": true,
+  "scripts": {
+    "dev:client": "vite",
+
+    "dev:worker": "wrangler dev --assets dist",
+
+    "dev": "pnpm run build:client --watch & pnpm run dev:worker",
+
+    "build:client": "vite build",
+
+    "deploy": "pnpm run build:client && wrangler deploy"
+  },
+  "dependencies": {
+    "hono": "^4.8.4",
+    "tdesign-vue-next": "^1.14.2",
+    "vue": "^3.5.17",
+    "vue-router": "^4.5.1"
+  },
+  "devDependencies": {
+    "@vitejs/plugin-vue": "^6.0.0",
+    "typescript": "^5.8.3",
+    "vite": "^7.0.3",
+    "wrangler": "^4.24.0"
+  }
+}
