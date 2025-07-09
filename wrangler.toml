@@ -1,4 +1,4 @@
-name = "hono_file"
+name = "hono-file"
 main = "src/index.ts"
 compatibility_date = "2025-07-01"
 compatibility_flags = ["nodejs_compat"]
