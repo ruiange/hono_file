@@ -1,5 +1,5 @@
 {
-  "name": "my-app",
+  "name": "hono-file",
   "version": "0.0.1",
   "private": true,
   "scripts": {
@@ -9,13 +9,19 @@
     "build": "pnpm run build:client",
     "build:client": "vite build",
     "deploy": "pnpm run build:client && wrangler deploy",
-    "cf-deploy": "pnpm run deploy"
+    "cf-deploy": "pnpm run deploy",
+    "migrate:generate": "drizzle-kit generate",
+    "migrate:apply": "wrangler d1 migrations apply hono-file",
+    "generate:or:apply": "pnpm run migrate:generate && pnpm run migrate:apply",
+    "drizzle:studio": "drizzle-kit studio"
   },
   "engines": {
     "node": ">=20"
   },
   "packageManager": "pnpm@9.2.0",
   "dependencies": {
+    "@cloudflare/workers-types": "^4.20250709.0",
+    "drizzle-orm": "^0.44.2",
     "hono": "^4.8.4",
     "tdesign-vue-next": "^1.14.2",
     "vue": "^3.5.17",
@@ -24,6 +30,7 @@
   "devDependencies": {
     "@vitejs/plugin-vue": "^6.0.0",
     "concurrently": "^9.2.0",
+    "drizzle-kit": "^0.31.4",
     "typescript": "^5.8.3",
     "vite": "^7.0.3",
     "wrangler": "^4.24.0"

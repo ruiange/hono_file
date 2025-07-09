@@ -15,6 +15,7 @@ command = "corepack enable && pnpm install --frozen-lockfile && pnpm run build"
 binding = "DB"
 database_name = "hono-file"
 database_id = "32cfe7f8-e9fe-4265-95d1-f9e65d8ebd83"
+migrations_dir = "drizzle"
 
 
 
