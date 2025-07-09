@@ -1,7 +1,7 @@
 <template>
   <t-card title="欢迎">
     <p>这是基于 Cloudflare Workers + Vue3 + TDesign 的示例项目。</p>
-    <t-button theme="primary" @click="fetchMessage">调用接口</t-button>
+    <t-button theme="primary" @click="fetchMessage">调用接口啊</t-button>
     <p class="mt-2">{{ message }}</p>
   </t-card>
 </template>
