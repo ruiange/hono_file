@@ -4,22 +4,24 @@ import { Context } from 'hono'
 import { success, fail } from '../utils/response.util'
 import { ERROR_CODES } from '../constants/error-codes'
 
-export async function register(c: Context) {
+const getErrorByKey = (key: string) => ERROR_CODES.find(e => e.key === key)!
+
+export const register = async (c: Context) => {
   let body
   try {
     body = await c.req.json()
   } catch (e) {
-    const err = ERROR_CODES('INVALID_JSON')
+    const err = getErrorByKey('INVALID_JSON')
     return c.json(fail(err.code, err.message))
   }
   const { name, email, password } = body || {}
   if (!name || !email || !password) {
-    const err = ERROR_CODES('MISSING_PARAMS')
+    const err = getErrorByKey('MISSING_PARAMS')
     return c.json(fail(err.code, err.message))
   }
   const exists = await userService.findUserByEmail(c.env.DB, email)
   if (exists) {
-    const err = ERROR_CODES('EMAIL_EXISTS')
+    const err = getErrorByKey('EMAIL_EXISTS')
     return c.json(fail(err.code, err.message))
   }
   const password_hash = await userService.hashPassword(password)
@@ -27,27 +29,27 @@ export async function register(c: Context) {
   return c.json(success({ id: user.id, name: user.name, email: user.email }))
 }
 
-export async function login(c: Context) {
+export const login = async (c: Context) => {
   let body
   try {
     body = await c.req.json()
   } catch (e) {
-    const err = ERROR_CODES('INVALID_JSON')
+    const err = getErrorByKey('INVALID_JSON')
     return c.json(fail(err.code, err.message))
   }
   const { email, password } = body || {}
   if (!email || !password) {
-    const err = ERROR_CODES('MISSING_PARAMS')
+    const err = getErrorByKey('MISSING_PARAMS')
     return c.json(fail(err.code, err.message))
   }
   const user = await userService.findUserByEmail(c.env.DB, email)
   if (!user) {
-    const err = ERROR_CODES('USER_NOT_FOUND')
+    const err = getErrorByKey('USER_NOT_FOUND')
     return c.json(fail(err.code, err.message))
   }
   const valid = await userService.verifyPassword(password, user.password_hash)
   if (!valid) {
-    const err = ERROR_CODES('PASSWORD_INCORRECT')
+    const err = getErrorByKey('PASSWORD_INCORRECT')
     return c.json(fail(err.code, err.message))
   }
   const token = await createJwt({ id: user.id, name: user.name, email: user.email })
