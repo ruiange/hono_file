@@ -5,3 +5,8 @@ compatibility_flags = ["nodejs_compat"]
 
 [assets]
 bucket = "./dist"
+
+# ② 构建命令：先装依赖再跑 Vite
+[build]
+# corepack 会自动安装 pnpm；如果你用 npm/yarn，改掉即可
+command = "corepack enable && pnpm install --frozen-lockfile && pnpm run build:client"
