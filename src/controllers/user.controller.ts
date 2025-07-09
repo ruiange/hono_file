@@ -52,6 +52,6 @@ export const login = async (c: Context) => {
     const err = getErrorByKey('PASSWORD_INCORRECT')
     return c.json(fail(err.code, err.message))
   }
-  const token = await createJwt({ id: user.id, name: user.name, email: user.email })
+  const token = await createJwt({ id: user.id, name: user.name, email: user.email }, c.env.JWT_SECRET)
   return c.json(success({ token }))
 }
