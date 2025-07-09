@@ -3,9 +3,8 @@ import { serveStatic } from 'hono/cloudflare-workers'
 
 const app = new Hono()
 
-// 优先处理 API 路由
+// API 路由
 app.get('/api/hello', (c) => c.json({ message: '你好，TDesign Vue 3！' }))
-
 app.get('/api/users', (c) =>
     c.json([
         { id: 1, name: 'Alice', email: 'alice@example.com' },
@@ -14,12 +13,11 @@ app.get('/api/users', (c) =>
     ])
 )
 
-// 静态资源服务
-app.use('/assets/*', serveStatic({ root: './dist' }))
-app.use('/favicon.ico', serveStatic({ path: './dist/favicon.ico' }))
-app.use('/index.html', serveStatic({ path: './dist/index.html' }))
+// ✅ 静态资源托管（无须指定 root 路径，交给 Cloudflare 处理）
+app.use('/assets/*', serveStatic())
+app.use('/favicon.ico', serveStatic())
 
-// Vue SPA fallback：所有非 API 非静态资源请求都返回 index.html
-app.get('*', serveStatic({ path: './dist/index.html' }))
+// ✅ Vue SPA 前端路由 fallback：history 模式下所有非 API/静态资源请求
+app.get('*', serveStatic({ path: '/index.html' }))  // ⚠️ 注意这里是 `/index.html`
 
 export default app
