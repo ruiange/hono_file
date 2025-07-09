@@ -12,7 +12,7 @@ app.get('/api/users', c => c.json([
 ]))
 
 // 2. 前端资源与 SPA fallback
-app.use('*', serveStatic({ root: '/', path: '/index.html' }))
+app.use('*', serveStatic({ root: './', path: '/index.html' }))
 // ↑ 说明
 //   • root:'/'  让 Worker 去 __STATIC_CONTENT__ 里按 manifest 查找 /assets/... 等文件
 //   • path:'/index.html' 当 key 依旧找不到时（例如 /about），返回首页，交给 Vue Router
