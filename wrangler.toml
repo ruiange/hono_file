@@ -22,3 +22,7 @@ migrations_dir = "drizzle"
 [[r2_buckets]]
 binding         = "FILE"
 bucket_name     = "hono-file"
+
+
+[vars]
+JWT_SECRET = "your-very-strong-secret-key"
